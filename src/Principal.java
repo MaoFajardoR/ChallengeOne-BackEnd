@@ -32,99 +32,156 @@ public class Principal {
 		};
 		
 		String opcion = "";
+		int continuar = 0;
 		
-		try {
-			opcion = (String) JOptionPane.showInputDialog(null, "Selecciona la opción deseada:", "Conversor", 
-					JOptionPane.DEFAULT_OPTION, null, opciones, opciones[0]);
-			switch (opcion) {
-				case "Conversor de monedas": 
-					String moneda = (String) JOptionPane.showInputDialog(null, "Elije la moneda a la que deseas convertir tu dinero:", "Conversor de monedas",
-						JOptionPane.DEFAULT_OPTION, null, monedas, monedas[0]);
-					convertir(moneda);
-					break;
-				case "Conversor de temperatura": 
-					String escala = (String) JOptionPane.showInputDialog(null, "Elije la escala a la que deseas convertir la temperatura:", "Conversor de temperaturas",
-						JOptionPane.DEFAULT_OPTION, null, escalas, escalas[0]);
-					JOptionPane.showMessageDialog(null, "Seleccionaste: " +escala, "Conversor de temperaturas", JOptionPane.PLAIN_MESSAGE);
-					convertir(escala);
-					break;
-				default:
-					JOptionPane.showMessageDialog(null, "No seleccionaste ninguna opción");
+		while (continuar == 0) {
+			try {
+				opcion = (String) JOptionPane.showInputDialog(null, "Selecciona la opción deseada:", "Conversor", 
+						JOptionPane.DEFAULT_OPTION, null, opciones, opciones[0]);
+				switch (opcion) {
+					case "Conversor de monedas": 
+						String moneda = (String) JOptionPane.showInputDialog(null, "Elije la moneda a la que deseas convertir tu dinero:", "Conversor de monedas",
+							JOptionPane.DEFAULT_OPTION, null, monedas, monedas[0]);
+						convertirMonedas(moneda);
+						break;
+					case "Conversor de temperatura": 
+						String escala = (String) JOptionPane.showInputDialog(null, "Elije la escala a la que deseas convertir la temperatura:", "Conversor de temperaturas",
+							JOptionPane.DEFAULT_OPTION, null, escalas, escalas[0]);
+						convertirTemperaturas(escala);
+						break;
+					default:
+						JOptionPane.showMessageDialog(null, "No seleccionaste ninguna opción");
+				}
+			} catch (NullPointerException npe) {
+				JOptionPane.showMessageDialog(null, "No seleccionaste ninguna opción");
 			}
-		} catch (NullPointerException npe) {
-			JOptionPane.showMessageDialog(null, "No seleccionaste ninguna opción");
+			continuar = JOptionPane.showConfirmDialog(null, "Desea continuar?");
 		}
+		JOptionPane.showMessageDialog(null, "Programa Finalizado");
 	}
 	
-	public static void convertir(String tipoConversion) {
+	public static void convertirMonedas(String opcionesConversion) {
 		
 		double numero = 0.0;
 		double conversion = 0.0;
 		double tasaCambio = 1.0;
-		String monedaOrigen = "";
-		String monedaDestino = "";
+		String origen = "";
+		String destino = "";
 		
-		switch (tipoConversion) {
+		switch (opcionesConversion) {
 			case "De pesos a dólares americanos": 
-				tasaCambio /= 4900;
-				monedaOrigen = "COP$";
-				monedaDestino = "USD$";
+				tasaCambio /= 4868.13;
+				origen = "COP$";
+				destino = "USD$";
 				break;
 			case "De pesos a euros": 
-				tasaCambio /= 5500;
-				monedaOrigen = "COP$";
-				monedaDestino = "EUR$";
+				tasaCambio /= 5169.53;
+				origen = "COP$";
+				destino = "EUR$";
 				break;
 			case "De pesos a libras esterlinas": 
-				tasaCambio /= 6300;
-				monedaOrigen = "COP$";
-				monedaDestino = "GBP$";
+				tasaCambio /= 5893.55;
+				origen = "COP$";
+				destino = "GBP$";
 				break;
 			case "De pesos a yenes": 
-				tasaCambio /= 1500;
-				monedaOrigen = "COP$";
-				monedaDestino = "JPY$";
+				tasaCambio /= 36.60;
+				origen = "COP$";
+				destino = "JPY$";
 				break;
 			case "De pesos a won coreano": 
-				tasaCambio /= 2000;
-				monedaOrigen = "COP$";
-				monedaDestino = "KRW$";
+				tasaCambio /= 3.73;
+				origen = "COP$";
+				destino = "KRW$";
 				break;
 			case "De dólares americanos a pesos": 
-				tasaCambio = 4900;
-				monedaOrigen = "USD$";
-				monedaDestino = "COP$";
+				tasaCambio = 4868.13;
+				origen = "USD$";
+				destino = "COP$";
 				break;
 			case "De euros a pesos": 
-				tasaCambio = 5500;
-				monedaOrigen = "EUR$";
-				monedaDestino = "COP$";
+				tasaCambio = 5169.53;
+				origen = "EUR$";
+				destino = "COP$";
 				break;
 			case "De libras esterlinas a pesos": 
-				tasaCambio = 6300;
-				monedaOrigen = "GBP$";
-				monedaDestino = "COP$";
+				tasaCambio = 5893.55;
+				origen = "GBP$";
+				destino = "COP$";
 				break;
 			case "De yenes a pesos": 
-				tasaCambio = 1500;
-				monedaOrigen = "JPY$";
-				monedaDestino = "COP$";
+				tasaCambio = 36.60;
+				origen = "JPY$";
+				destino = "COP$";
 				break;
 			case "De won coreano a pesos": 
-				tasaCambio = 2000;
-				monedaOrigen = "KRW$";
-				monedaDestino = "COP$";
+				tasaCambio = 3.73;
+				origen = "KRW$";
+				destino = "COP$";
+				break;
+			case "De Celsius a Fahrenheit": 
+				origen = "°C ";
+				destino = "°F ";
 				break;
 		}
 		
 		try {
 			numero = Float.parseFloat(JOptionPane.showInputDialog(null, "Ingresa la cantidad que deseas convertir:"));
 			conversion = numero * tasaCambio;
-			JOptionPane.showMessageDialog(null, monedaOrigen + numero + " equivalen a " + monedaDestino + conversion, "Conversor de monedas", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, origen + numero + " equivalen a " + destino + conversion, "Resultado conversión", JOptionPane.PLAIN_MESSAGE);
 		} 
 		catch (NumberFormatException ex) {
-			JOptionPane.showMessageDialog(null, "¡Solo debes digitar números. ", "Conversor de monedas", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(null, "¡Solo debes digitar números. ", "Conversor", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 	
+	public static void convertirTemperaturas(String opcionesConversion) {
+		
+		double numero = 0.0;
+		double conversion = 0.0;
+		String origen = "";
+		String destino = "";
+		
+		try {
+			numero = Float.parseFloat(JOptionPane.showInputDialog(null, "Ingresa la cantidad que deseas convertir:"));
+
+			switch (opcionesConversion) {
+				case "De Celsius a Fahrenheit": 
+					conversion = numero * 1.8 +32;
+					origen = "°C";
+					destino = "°F";
+					break;
+				case "De Celsius a Kelvin": 
+					conversion = numero + 273.15;
+					origen = "°C";
+					destino = "°K";
+					break;
+				case "De Fahrenheit a Celsius":
+					conversion = (numero -32) / 1.8;
+					origen = "°F";
+					destino ="°C";
+					break;
+				case "De Fahrenheit a Kelvin":
+					conversion = (numero - 32) / 1.8 + 273.15;
+					origen = "°F";
+					destino ="°K";
+					break;
+				case "De Kelvin a Celsius": 
+					conversion = numero - 273.15;
+					origen = "°K";
+					destino = "°C";
+					break;
+				case "De Kelvin a Fahrenheit":
+					conversion = (numero - 273.15) * 1.8 + 32;
+					origen = "°K";
+					destino ="°F";
+					break;
+			}
+		JOptionPane.showMessageDialog(null, numero + origen + " equivalen a " + conversion + destino, "Resultado conversión", JOptionPane.PLAIN_MESSAGE);
+		} 
+		catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(null, "¡Solo debes digitar números. ", "Conversor", JOptionPane.PLAIN_MESSAGE);
+		}
+	}
+
 }
